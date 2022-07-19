@@ -1,0 +1,26 @@
+#submit-container {
+    display: block;
+}
+
+#submit-container > button {
+    background: #e86375;
+}
+
+#submit-container > button:hover {
+    background: #dc4730;
+}
+
+.summer, a {
+    color: #e86375;
+}
+
+.summer:hover, a:hover {
+    color: #dc4730;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width:100%;
+
+}

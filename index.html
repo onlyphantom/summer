@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+
+    <!-- Add bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-night.min.css" rel="stylesheet">
+
+    <!-- Custom style.css -->
+    <link rel="stylesheet" href="style.css" type="text/css">
+
+    <title>Summer 📰 (Summary Bot)</title>
+    <py-env>
+        - asyncio
+        - paths:
+            - scripts/summer.py
+    </py-env>
+</head>
+<body>
+    <div class="container">
+        <h1 class="display-1 fw-bolder summer">Summer 📰</h1>
+        <p class="lead">So we're not the smartest person in the room. Doesn't mean we can't try.</p>
+        <section id="input">
+            <py-inputbox id="topic">
+            </py-inputbox>
+            <small class="form-text text-muted">Need ideas? How about one of these: "MRI", "USDA", "NATO", "Nietzsche", "Paris Agreement"</small>
+            <py-button id="submit" label="Summarize" class="mt-2">
+                import asyncio
+                from pyodide import create_proxy
+                from summer import get_summary
+
+                @create_proxy
+                async def on_click(evt):
+                    url = document.getElementById("topic").value
+                    result = await get_summary(url)
+                    pyscript.write("summary", result)
+            </py-button>
+            
+        </section>
+        <section id="summary" class="mt-4">
+            <h6>Enter a keyword or a topic in the field above and let Summer 📰 retrieve a summary 🔎 from Wikipedia in no time.</h6>
+        </section>
+        <button id="copy" class="btn btn-warning">Copy to 📋 Clipboard</button>
+    
+        <hr />
+        <footer class="footer">
+            Part of my 
+                <a href="https://www.youtube.com/playlist?list=PLXsFtK46HZxXS9yBHkQXvaw1eLSIS5Mb-" target="_blank">
+                Build with PyScript series
+                </a> on YouTube. Source code for Summer is available on my github:
+                <a href="https://github.com/onlyphantom/summer" target="_blank">@onlyphantom</a>.
+        </footer>
+    
+    </div>  
+
+    <script>
+        document.getElementById("topic").focus()
+
+        function copySummary(){
+            let summaryText = document.getElementById("summary").innerText
+
+            navigator.clipboard.writeText(summaryText).then(function(){
+                console.log("Copied to clipboard!")
+            }, 
+                function(err){
+                    console.log("Could not copy text")
+                }
+            )
+        }
+
+        let copyButton = document.getElementById("copy");
+        copyButton.addEventListener("click", copySummary);
+
+    </script>
+
+</body> 
+</html>
+
